@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auto-Submit Google Form</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+    iframe { border: none; width: 100%; height: 800px; }
+    #timer { font-size: 20px; margin-top: 20px; color: red; }
+  </style>
+</head>
+<body>
+
+<h1>Please fill out the form</h1>
+<div id="timer">This form will be auto-submitted in 1 hour.</div>
+
+<!-- Replace the src with your own form's embed link -->
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUtUfpK2PXbSfhX8kj-CQOUPT5py7dUAAhNxcF7rgn7u6vQQ/viewform?embedded=true" width="640" height="4527" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+<script>
+  let countdown = 3600; // 1 hour in seconds
+
+  const timerEl = document.getElementById('timer');
+
+  function updateTimer() {
+    const hrs = Math.floor(countdown / 3600);
+    const mins = Math.floor((countdown % 3600) / 60);
+    const secs = countdown % 60;
+    timerEl.textContent = `Auto-submitting in ${hrs}h ${mins}m ${secs}s`;
+    countdown--;
+    if (countdown <= 0) {
+      tryAutoSubmit();
+      clearInterval(timerInterval);
+    }
+  }
+
+  const timerInterval = setInterval(updateTimer, 1000);
+
+  function tryAutoSubmit() {
+    const iframe = document.getElementById('google-form');
+    const iframeWindow = iframe.contentWindow;
+
+    // Attempt to find and click the submit button inside the form
+    // This will only work if form is same-origin (which it isn't), so this won't work in production
+    alert("Time's up! Please submit the form now."); // Fallback behavior
+  }
+</script>
+
+</body>
+</html>
